@@ -1,5 +1,7 @@
 best viewed in opera gx
+
 powered by szpontcode
+
 frfr
 
 # My Personal Website
