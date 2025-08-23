@@ -58,7 +58,7 @@
   <source src="fuck-sound-effect-meme.mp3" type="audio/mpeg">
 </audio>
 
-  <source src="Strokinthatshitinbrazil.mp3" type="audio/mpeg">
+  <source src="Strokinthatshitinbrazil_jerseyclub_200bpm_808_remix.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 
@@ -69,8 +69,6 @@
     Score: <span id="score">0</span> | High Score: <span id="highScore">0</span>
   </div>
 <div id="credits" style="margin-top: 12px; font-size: 14px; color: #aaa;">Made by the Anvil System that was scolding Mista GPT everytime he made a bug that rendered the game unplayable — works best on Opera GX</div>
-  <button id="easyModeBtn" style="font-size:14px;padding:6px 14px;background-color:#181818;color:#ddd;">Enable Pedał Mode</button>
-  <p style="font-size:14px;">🎮 Use arrow keys to move. Press <strong>P</strong> to pause/resume. Pedał mode essentially disables death upon self-collision.</p>
   <button id="homeBtn" onclick="window.location.href='index.html'">Return to homepage</button>
   <style>
     #homeBtn {
@@ -92,7 +90,7 @@
     const scoreDisplay = document.getElementById("score");
     const highScoreDisplay = document.getElementById("highScore");
     const eatSound = document.getElementById("eatSound");
-    const easyModeBtn = document.getElementById("easyModeBtn");
+    const pedalSound = new Audio("jestem_pedalem.mp3");
 
     const gridSize = 20;
     const tileCount = canvas.width / gridSize;
@@ -108,6 +106,7 @@
     let gameLoopInterval;
     let paused = false;
     let easyMode = false;
+    let hue = 0; // Initialize hue for rainbow effect
 
     function startGameLoop() {
       clearInterval(gameLoopInterval);
@@ -211,17 +210,20 @@ document.getElementById("playWithoutMusic").addEventListener("click", () => {
           break;
         case "p":
         case "P":
+          easyMode = !easyMode;
+          if (easyMode) {
+            pedalSound.play();
+          } else {
+            pedalSound.pause();
+            pedalSound.currentTime = 0;
+          }
+          break;
+        case " ":
           paused = !paused;
           break;
       }
     });
 
-    easyModeBtn.addEventListener("click", () => {
-      easyMode = !easyMode;
-      easyModeBtn.textContent = easyMode ? "Disable Pedał Mode" : "Enable Pedał Mode";
-    });
-
-    
 document.getElementById("playWithMusic").addEventListener("click", () => {
   const music = document.getElementById("bgMusic");
   music.muted = false;
@@ -271,10 +273,9 @@ bgMusic.preservesPitch = false;
 bgMusic.mozPreservesPitch = false;
 bgMusic.webkitPreservesPitch = false;
 
-let rate = 3.0; // Start very fast
+let rate = 3.0;
 bgMusic.playbackRate = rate;
 
-// Gradually slow down the tempo over time
 const tempoInterval = setInterval(() => {
   if (rate > 1.0) {
     rate -= 0.05;
@@ -283,7 +284,7 @@ const tempoInterval = setInterval(() => {
     bgMusic.playbackRate = 1.0;
     clearInterval(tempoInterval);
   }
-}, 500); // every 500ms reduce tempo a bit
+}, 500);
 </script>
 
 </body>
