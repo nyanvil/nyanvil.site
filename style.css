@@ -79,10 +79,7 @@ footer {
 .blog-post {
     margin-bottom: 30px;
     padding: 20px;
-    border: 1px solid #3e3e6e;
-    border-radius: 8px;
-    background-color: #3e3e6e;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background-color: #2e2e4e;
 }
 
 .blog-post h3 {
