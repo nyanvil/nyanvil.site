@@ -68,7 +68,9 @@
   <div id="scoreBoard">
     Score: <span id="score">0</span> | High Score: <span id="highScore">0</span>
   </div>
+<div id="pedalModeIndicator" style="font-size:14px; color: #aaa; margin-top: 5px;">Pedał Mode: OFF</div>
 <div id="credits" style="margin-top: 12px; font-size: 14px; color: #aaa;">Made by the Anvil System that was scolding Mista GPT everytime he made a bug that rendered the game unplayable — works best on Opera GX</div>
+  <p style="font-size:14px;">🎮 Use arrow keys to move. Press <strong>P</strong> to enable/disable Pedał Mode. Press <strong>Space</strong> to pause/resume.</p>
   <button id="homeBtn" onclick="window.location.href='index.html'">Return to homepage</button>
   <style>
     #homeBtn {
@@ -91,6 +93,7 @@
     const highScoreDisplay = document.getElementById("highScore");
     const eatSound = document.getElementById("eatSound");
     const pedalSound = new Audio("jestem_pedalem.mp3");
+    const pedalModeIndicator = document.getElementById("pedalModeIndicator");
 
     const gridSize = 20;
     const tileCount = canvas.width / gridSize;
@@ -213,9 +216,11 @@ document.getElementById("playWithoutMusic").addEventListener("click", () => {
           easyMode = !easyMode;
           if (easyMode) {
             pedalSound.play();
+            pedalModeIndicator.textContent = "Pedał Mode: ON";
           } else {
             pedalSound.pause();
             pedalSound.currentTime = 0;
+            pedalModeIndicator.textContent = "Pedał Mode: OFF";
           }
           break;
         case " ":
