@@ -1,0 +1,25 @@
+<style>
+    canvas {
+      background: #111;
+      display: block;
+      margin: 20px auto;
+      border: 2px solid #444;
+    }
+    body {
+      text-align: center;
+      font-family: sans-serif;
+      color: white;
+      background-color: #000;
+    }
+    #scoreBoard {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+    #easyModeBtn {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #333;
+      color: #fff;
+      border: 1px sballs>
+  </style>
