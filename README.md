@@ -1,3 +1,7 @@
+best viewed in opera gx
+powered by szpontcode
+frfr
+
 # My Personal Website
 
 This repository contains the code for my personal website, which includes an "About Me" section and a simple blog.
