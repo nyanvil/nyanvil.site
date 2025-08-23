@@ -10,6 +10,11 @@ This repository contains the code for my personal website, which includes an "Ab
 
 ## How to View
 
-Simply open `index.html` or `blog.html` in your web browser to view the website.
+### locally
 
-or open https://nyanvil.site cuz its my fuckin site
+1. run `python3 -m http.server 8000`
+2. open http://localhost:8000/
+
+## online
+
+open https://nyanvil.site
