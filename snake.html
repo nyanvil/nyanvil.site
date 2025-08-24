@@ -70,7 +70,7 @@
   </div>
 <div id="pedalModeIndicator" style="font-size:14px; color: #aaa; margin-top: 5px;">Pedał Mode: OFF</div>
 <div id="credits" style="margin-top: 12px; font-size: 14px; color: #aaa;">Made by the Anvil System that was scolding Mista GPT everytime he made a bug that rendered the game unplayable — works best on Opera GX</div>
-  <p style="font-size:14px;">🎮 Use arrow keys to move. Press <strong>P</strong> to enable/disable Pedał Mode. Press <strong>Space</strong> to pause/resume.</p>
+  <p style="font-size:14px;">🎮 Use arrow keys to move. Press <strong>P</strong> to enable/disable Pedał Mode. Pedał mode is essentially no death upon self-collision. Press <strong>Space</strong> to pause/resume.</p>
   <button id="homeBtn" onclick="window.location.href='index.html'">Return to homepage</button>
   <style>
     #homeBtn {
@@ -109,7 +109,7 @@
     let gameLoopInterval;
     let paused = false;
     let easyMode = false;
-    let hue = 0; // Initialize hue for rainbow effect
+    let hue = 0;
 
     function startGameLoop() {
       clearInterval(gameLoopInterval);
