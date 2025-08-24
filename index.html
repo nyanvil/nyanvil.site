@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header>
         <h1>Nyanvil.site</h1>
         <nav>
@@ -16,6 +17,11 @@
             </ul>
         </nav>
     </header>
+
+    <!-- Last.fm Now Playing Banner -->
+    <div id="lastfm-banner" style="width:100%;background:#181818;color:#fff;padding:10px 0;text-align:center;font-family:sans-serif;font-size:16px;letter-spacing:0.5px;">
+      <span id="lastfm-status">Loading your Last.fm status...</span>
+    </div>
 
     <main>
         <section id="about">
@@ -42,4 +48,41 @@
         <p><a href="https://github.com/nyanvil/nyanvil.site" target="_blank">GitHub Repository</a></p>
     </footer>
 </body>
+<script>
+// Last.fm Now Playing Banner Script
+const lastfmUser = 'lumenreturns';
+const apiKey = 'a5b88c42d7b983c88b24c7a4e9a989da';
+const statusSpan = document.getElementById('lastfm-status');
+
+function updateLastfmBanner() {
+  fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${lastfmUser}&api_key=${apiKey}&format=json&limit=1`)
+    .then(res => res.json())
+    .then(data => {
+      const track = data.recenttracks && data.recenttracks.track && data.recenttracks.track[0];
+      if (!track) {
+        statusSpan.textContent = "Couldn't load Last.fm status.";
+        return;
+      }
+      const artist = track.artist['#text'] || 'Unknown Artist';
+      const song = track.name || 'Unknown Track';
+      const album = track.album['#text'] || '';
+      const nowPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
+      const url = track.url || null;
+      let msg = '';
+      if (nowPlaying) {
+        msg = `🎧 Now listening to <b><a href="${url}" target="_blank" style="color:#7ddcff;text-decoration:underline;">${song}</a></b> by <b>${artist}</b>${album ? ` from <b>${album}</b>` : ''}`;
+      } else {
+        msg = `Last played: <b><a href="${url}" target="_blank" style="color:#7ddcff;text-decoration:underline;">${song}</a></b> by <b>${artist}</b>${album ? ` from <b>${album}</b>` : ''}`;
+      }
+      statusSpan.innerHTML = msg;
+    })
+    .catch(() => {
+      statusSpan.textContent = "Couldn't load Last.fm status.";
+    });
+}
+
+updateLastfmBanner();
+// Optionally refresh every 60 seconds
+setInterval(updateLastfmBanner, 60000);
+</script>
 </html>
