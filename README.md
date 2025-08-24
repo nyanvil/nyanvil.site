@@ -8,7 +8,7 @@ Best viewed in Opera GX
 
 ### locally
 
-1. run `python3 server.py` and enter the last fm api key
+1. run `php -S localhost:8000`
 2. open http://localhost:8000/
 
 ## online
