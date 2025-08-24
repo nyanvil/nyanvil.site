@@ -32,6 +32,14 @@
     border: none;
     cursor: pointer;
   }
+  body.pedal-rainbow {
+    animation: pedalRainbowBg 3s linear infinite;
+    background: #111;
+  }
+  @keyframes pedalRainbowBg {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
 </style>
 
 <div id="musicPrompt">
@@ -93,6 +101,7 @@
     const highScoreDisplay = document.getElementById("highScore");
     const eatSound = document.getElementById("eatSound");
     const pedalSound = new Audio("jestem_pedalem.mp3");
+    pedalSound.loop = false; // default off
     const pedalModeIndicator = document.getElementById("pedalModeIndicator");
 
     const gridSize = 20;
@@ -215,12 +224,17 @@ document.getElementById("playWithoutMusic").addEventListener("click", () => {
         case "P":
           easyMode = !easyMode;
           if (easyMode) {
+            pedalSound.loop = true;
+            pedalSound.currentTime = 0;
             pedalSound.play();
             pedalModeIndicator.textContent = "Pedał Mode: ON";
+            document.body.classList.add("pedal-rainbow");
           } else {
+            pedalSound.loop = false;
             pedalSound.pause();
             pedalSound.currentTime = 0;
             pedalModeIndicator.textContent = "Pedał Mode: OFF";
+            document.body.classList.remove("pedal-rainbow");
           }
           break;
         case " ":
