@@ -8,8 +8,9 @@ Best viewed in Opera GX
 
 ### locally
 
-1. run `php -S localhost:8000`
-2. open http://localhost:8000/
+1. update the `lastfm_apikey.txt` file with your last.fm api key
+2. run `php -S localhost:8000`
+3. open http://localhost:8000/
 
 ## online
 
