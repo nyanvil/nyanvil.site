@@ -1,9 +1,17 @@
 <?php
+// Allow CORS for debugging (optional, safe for local dev)
+header('Access-Control-Allow-Origin: *');
+
 // Read API key from a file (safer than hardcoding)
 $api_key_file = __DIR__ . '/lastfm_apikey.txt';
 if (!file_exists($api_key_file)) {
     http_response_code(500);
     echo "API key file not found.";
+    exit;
+}
+if (!is_readable($api_key_file)) {
+    http_response_code(500);
+    echo "API key file is not readable. Check file permissions.";
     exit;
 }
 $api_key = trim(file_get_contents($api_key_file));

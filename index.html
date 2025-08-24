@@ -54,7 +54,7 @@ const lastfmUser = 'lumenreturns';
 const statusSpan = document.getElementById('lastfm-status');
 
 function updateLastfmBanner() {
-  fetch(`/lastfm/method=user.getrecenttracks&user=${lastfmUser}&limit=1`)
+  fetch(`/lastfm_proxy.php?method=user.getrecenttracks&user=${lastfmUser}&limit=1`)
     .then(res => res.json())
     .then(data => {
       const track = data.recenttracks && data.recenttracks.track && data.recenttracks.track[0];
