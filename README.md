@@ -8,8 +8,9 @@ Best viewed in Opera GX
 
 ### locally
 
-1. run `python3 -m http.server 8000`
-2. open http://localhost:8000/
+1. run `python3 server.py` and enter the last fm api key
+2. run `python3 -m http.server 8000`
+3. open http://localhost:8000/
 
 ## online
 

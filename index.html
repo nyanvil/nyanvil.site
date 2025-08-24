@@ -51,11 +51,10 @@
 <script>
 // Last.fm Now Playing Banner Script
 const lastfmUser = 'lumenreturns';
-const apiKey = 'a5b88c42d7b983c88b24c7a4e9a989da';
 const statusSpan = document.getElementById('lastfm-status');
 
 function updateLastfmBanner() {
-  fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${lastfmUser}&api_key=${apiKey}&format=json&limit=1`)
+  fetch(`/lastfm/method=user.getrecenttracks&user=${lastfmUser}&limit=1`)
     .then(res => res.json())
     .then(data => {
       const track = data.recenttracks && data.recenttracks.track && data.recenttracks.track[0];
