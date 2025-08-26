@@ -35,14 +35,14 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #e0e0e0;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #007BFF;
+    color: #00ffff;
 }
 
 main {
@@ -88,14 +88,14 @@ footer {
 }
 
 .blog-post a {
-    color: #007BFF;
+    color: #00ffff;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
 .blog-post a:hover {
-    color: #e0e0e0;
+    color: #ffffff;
 }
 
 .post-meta {
