@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tetris Game</title>
@@ -91,6 +93,9 @@
 <body>
   <h1>Antris</h1>
   <div style="color:#aaa; margin-top:0; margin-bottom:6px; font-size:0.95em;">powered by Cock Engine</div>
+  <div id="controls">
+    Controls: ← → (move), ↑ (rotate), ↓ (soft drop), Space (hard drop), R (restart), Hold: Shift or C
+  </div>
   <div id="score">Score: 0</div>
   <div id="modeStatus" style="color:#bbb; margin-bottom:10px; font-size:0.95em;"></div>
   <div class="tetris-container">
@@ -101,7 +106,7 @@
     <canvas id="tetris" width="240" height="480"></canvas>
     <div class="side-panel">
       <div class="panel-label">Next</div>
-      <canvas id="next" width="96" height="288"></canvas>
+      <canvas id="next" width="96" height="480"></canvas>
     </div>
   </div>
   <div id="startMenu" style="background:#111; border:1px solid #333; padding:16px 18px; border-radius:8px; box-shadow:0 6px 24px rgba(0,0,0,0.6); margin-bottom:12px;">
@@ -113,15 +118,13 @@
     </div>
     <div style="display:flex; gap:8px; align-items:center; justify-content:center;">
       <input type="checkbox" id="toggleSpeed" checked>
-      <label for="toggleSpeed" style="color:#bbb;">Speed up after each piece</label>
+      <label for="toggleSpeed" style="color:#bbb;">Accela</label>
       <input type="checkbox" id="toggleMusic" checked>
       <label for="toggleMusic" style="color:#bbb;">Music</label>
     </div>
     <div style="color:#888; font-size:0.9em; margin-top:8px; text-align:center;">40 Lines: clear 40 lines as fast as possible. Blitz: clear as many lines as you can in 2 minutes.</div>
   </div>
-  <div id="controls">
-    Controls: ← → (move), ↑ (rotate), ↓ (soft drop), Space (hard drop), R (restart), Hold: Shift or C
-  </div>
+
   <div id="error" style="color:#ff4c4c; font-weight:bold; margin-top:10px;"></div>
   <script>
     // --- TETRIS CONSTANTS ---
@@ -270,6 +273,40 @@
     let lineClearMessage = '';
     let lineClearStartTime = 0;
     const LINE_CLEAR_DURATION = 500; // 1.5 seconds
+
+    // Hard drop animation variables
+    let hardDropActive = false;
+    let hardDropStartPos = {x: 0, y: 0};
+    let hardDropEndPos = {x: 0, y: 0};
+    let hardDropAnimationStart = 0;
+    const HARD_DROP_ANIMATION_DURATION = 150; // 150ms animation
+
+    // === ADD GHOST PIECE SHADOW (SIMPLE VERSION) ===
+
+    // Add these variables after your existing variables (around line 275)
+    let ghostPiecePos = {x: 0, y: 0};
+    let ghostPieceMatrix = null;
+
+    // Add this simple function to calculate where the ghost lands
+    function updateGhostPiece() {
+      if (!player.matrix || inMenu) return;
+      
+      // Copy the current piece matrix
+      ghostPieceMatrix = player.matrix.map(row => row.slice());
+      
+      // Start from current position
+      let ghostY = player.pos.y;
+      const ghostX = player.pos.x;
+      
+      // Drop straight down until we hit something
+      while (!collide(arena, { ...player, pos: { x: ghostX, y: ghostY } }) && ghostY < ROWS) {
+        ghostY++;
+      }
+      ghostY--; // Move back up from collision
+      
+      ghostPiecePos = { x: ghostX, y: Math.max(0, ghostY) };
+    }
+
     // --- UTILS ---
     function createMatrix(w, h) {
       const matrix = [];
@@ -367,7 +404,7 @@
     }
     function drawNextPreviews() {
       nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 5; i++) {
         const idx = nextQueue[i];
         if (idx == null) continue;
         const m = SHAPES[idx];
@@ -557,7 +594,7 @@
     toggleSpeedEl.checked = autoSpeedEnabled;
     toggleSpeedEl.addEventListener('change', () => {
       if (!toggleSpeedEl.checked) {
-        const phrase = prompt('Type exactly: "I am a faggot" to disable speed-up');
+        const phrase = prompt('Type exactly: "I am a faggot" (case sensitive) to disable speed-up');
         if (phrase === 'I am a faggot') {
           autoSpeedEnabled = false;
         } else {
@@ -595,6 +632,15 @@
           }
         });
       });
+      
+      // Draw ghost piece (semi-transparent shadow)
+      if (ghostPieceMatrix && !inMenu && !hardDropActive) {
+        context.save();
+        context.globalAlpha = 0.2;
+        drawMatrix(ghostPieceMatrix, ghostPiecePos, player.tetrominoIndex);
+        context.restore();
+      }
+      
       if (player.matrix && !inMenu) drawMatrix(player.matrix, player.pos, player.tetrominoIndex);
       // Draw next (top 3) and hold previews
       drawNextPreviews();
@@ -700,6 +746,7 @@
         pieceOnGround = false;
         lockDelayActive = false;
       }
+      updateGhostPiece();
     }
     function playerRotate() {
       const originalMatrix = player.matrix;
@@ -722,6 +769,7 @@
         // Successfully rotated, reset lock delay
         pieceOnGround = false;
         lockDelayActive = false;
+        updateGhostPiece();
         return;
       }
       
@@ -745,6 +793,7 @@
           // Successfully rotated, reset lock delay
           pieceOnGround = false;
           lockDelayActive = false;
+          updateGhostPiece();
           return;
         }
       }
@@ -805,6 +854,8 @@
       // Reset lock delay state for new piece
       pieceOnGround = false;
       lockDelayActive = false;
+      
+      updateGhostPiece();
       
       if (collide(arena, player)) {
         handleGameOver();
@@ -913,6 +964,43 @@
           performRestart();
         }
       }
+      // Update hard drop animation
+      if (hardDropActive) {
+        const elapsed = performance.now() - hardDropAnimationStart;
+        const progress = Math.min(elapsed / HARD_DROP_ANIMATION_DURATION, 1);
+        
+        // Smooth easing function
+        const easeProgress = 1 - Math.pow(1 - progress, 3);
+        
+        // Interpolate position
+        player.pos.y = hardDropStartPos.y + (hardDropEndPos.y - hardDropStartPos.y) * easeProgress;
+        
+        if (progress >= 1) {
+          // Animation complete - lock the piece
+          player.pos = { ...hardDropEndPos };
+          merge(arena, player);
+          arenaSweep();
+          // Speed up after piece locks
+          if (autoSpeedEnabled) {
+            dropInterval = Math.max(SPEED_MIN_MS, dropInterval - SPEED_DECREMENT_MS);
+          }
+          playerReset();
+          updateScore();
+          if (collide(arena, player)) {
+            handleGameOver();
+          }
+          holdUsed = false;
+          
+          // Reset animation state
+          hardDropActive = false;
+          pieceOnGround = false;
+          lockDelayActive = false;
+        }
+      }
+      // Update ghost piece position
+      if (!inMenu && !gameOver && !paused) {
+        updateGhostPiece();
+      }
       draw();
       requestAnimationFrame(update);
     }
@@ -981,29 +1069,24 @@
       } else if (event.key === 'ArrowUp') {
         playerRotate();
       } else if (event.key === ' ') {
-        // Hard drop - INSTANT LOCK (no delay)
-        while (!collide(arena, player)) {
-          player.pos.y++;
+        // Hard drop with animation
+        if (!hardDropActive) {
+          // Find the drop position
+          const originalPos = { ...player.pos };
+          while (!collide(arena, player)) {
+            player.pos.y++;
+          }
+          player.pos.y--; // Move back up from collision
+          
+          // Set up animation
+          hardDropActive = true;
+          hardDropStartPos = originalPos;
+          hardDropEndPos = { ...player.pos };
+          hardDropAnimationStart = performance.now();
+          
+          // Reset to starting position for animation
+          player.pos = originalPos;
         }
-        player.pos.y--; // Move back up from collision
-        
-        // Immediately lock the piece (skip lock delay)
-        merge(arena, player);
-        arenaSweep();
-        // Speed up after piece locks
-        if (autoSpeedEnabled) {
-          dropInterval = Math.max(SPEED_MIN_MS, dropInterval - SPEED_DECREMENT_MS);
-        }
-        playerReset();
-        updateScore();
-        if (collide(arena, player)) {
-          handleGameOver();
-        }
-        holdUsed = false; // Only reset hold after piece locks
-        
-        // Reset lock delay state
-        pieceOnGround = false;
-        lockDelayActive = false;
       } else if (event.key === 'Shift' || event.key.toLowerCase() === 'c') {
         playerHold();
       }
