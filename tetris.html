@@ -648,22 +648,46 @@
       }
     }
     // --- Only reset holdUsed after piece locks and new one spawns ---
+    let lockDelayActive = false;
+    let lockDelayStart = 0;
+    const LOCK_DELAY_MS = 250; // 0.25 seconds of grace time
+    let pieceOnGround = false;
     function playerDrop() {
       player.pos.y++;
       if (collide(arena, player)) {
-        player.pos.y--;
-        merge(arena, player);
-        arenaSweep();
-        // Speed up after piece locks
-        if (autoSpeedEnabled) {
-          dropInterval = Math.max(SPEED_MIN_MS, dropInterval - SPEED_DECREMENT_MS);
+        player.pos.y--; // Move back up
+        
+        if (!pieceOnGround) {
+          // First time touching ground - start lock delay
+          pieceOnGround = true;
+          lockDelayActive = true;
+          lockDelayStart = performance.now();
         }
-        playerReset();
-        updateScore();
-        if (collide(arena, player)) {
-          handleGameOver();
+        
+        // Check if lock delay has expired
+        if (lockDelayActive && (performance.now() - lockDelayStart) >= LOCK_DELAY_MS) {
+          // Lock the piece
+          merge(arena, player);
+          arenaSweep();
+          // Speed up after piece locks
+          if (autoSpeedEnabled) {
+            dropInterval = Math.max(SPEED_MIN_MS, dropInterval - SPEED_DECREMENT_MS);
+          }
+          playerReset();
+          updateScore();
+          if (collide(arena, player)) {
+            handleGameOver();
+          }
+          holdUsed = false; // Only reset hold after piece locks
+          
+          // Reset lock delay state
+          pieceOnGround = false;
+          lockDelayActive = false;
         }
-        holdUsed = false; // Only reset hold after piece locks
+      } else {
+        // Piece moved down successfully, reset ground state
+        pieceOnGround = false;
+        lockDelayActive = false;
       }
       dropCounter = 0;
     }
@@ -671,6 +695,10 @@
       player.pos.x += dir;
       if (collide(arena, player)) {
         player.pos.x -= dir;
+      } else {
+        // Successfully moved, reset lock delay
+        pieceOnGround = false;
+        lockDelayActive = false;
       }
     }
     function playerRotate() {
@@ -691,6 +719,9 @@
       if (!collide(arena, basicTest)) {
         player.matrix = rotatedMatrix;
         player.rotation = (player.rotation + 1) % 4;
+        // Successfully rotated, reset lock delay
+        pieceOnGround = false;
+        lockDelayActive = false;
         return;
       }
       
@@ -711,12 +742,14 @@
           player.pos.x += dx;
           player.pos.y += dy;
           player.rotation = (player.rotation + 1) % 4;
+          // Successfully rotated, reset lock delay
+          pieceOnGround = false;
+          lockDelayActive = false;
           return;
         }
       }
       
       // If NO rotation works, keep original position (no rotation at all)
-      // This is safer than allowing any clipping
     }
     function rotate(matrix, reverse) {
       for (let y = 0; y < matrix.length; ++y) {
@@ -768,6 +801,11 @@
       player.pos.x = ((COLS / 2) | 0) - ((player.matrix[0].length / 2) | 0);
       holdUsed = false;
       fillNextQueue();
+      
+      // Reset lock delay state for new piece
+      pieceOnGround = false;
+      lockDelayActive = false;
+      
       if (collide(arena, player)) {
         handleGameOver();
       }
@@ -943,12 +981,29 @@
       } else if (event.key === 'ArrowUp') {
         playerRotate();
       } else if (event.key === ' ') {
-        // Hard drop
+        // Hard drop - INSTANT LOCK (no delay)
         while (!collide(arena, player)) {
           player.pos.y++;
         }
-        player.pos.y--;
-        playerDrop();
+        player.pos.y--; // Move back up from collision
+        
+        // Immediately lock the piece (skip lock delay)
+        merge(arena, player);
+        arenaSweep();
+        // Speed up after piece locks
+        if (autoSpeedEnabled) {
+          dropInterval = Math.max(SPEED_MIN_MS, dropInterval - SPEED_DECREMENT_MS);
+        }
+        playerReset();
+        updateScore();
+        if (collide(arena, player)) {
+          handleGameOver();
+        }
+        holdUsed = false; // Only reset hold after piece locks
+        
+        // Reset lock delay state
+        pieceOnGround = false;
+        lockDelayActive = false;
       } else if (event.key === 'Shift' || event.key.toLowerCase() === 'c') {
         playerHold();
       }
