@@ -461,9 +461,8 @@ function handleWin() {
 // Hook up menu buttons after DOM is ready
 document.getElementById('btn40').addEventListener('click', () => startMode('40lines'));
 document.getElementById('btnBlitz').addEventListener('click', () => startMode('blitz'));
-const toggleSpeedEl = document.getElementById('toggleSpeed');
-toggleSpeedEl.checked = autoSpeedEnabled;
-toggleSpeedEl.addEventListener('change', () => {
+
+let toggleSpeedElFunc = () => {
   if (!toggleSpeedEl.checked) {
     const phrase = prompt('Type exactly: "I am a faggot" (case sensitive) to disable speed-up');
     if (phrase === 'I am a faggot') {
@@ -476,16 +475,23 @@ toggleSpeedEl.addEventListener('change', () => {
     autoSpeedEnabled = true;
   }
   updateHUDForMode();
-});
-const toggleMusicEl = document.getElementById('toggleMusic');
-toggleMusicEl.addEventListener('change', () => {
+}
+
+const toggleSpeedEl = document.getElementById('toggleSpeed');
+toggleSpeedEl.checked = autoSpeedEnabled;
+toggleSpeedEl.addEventListener('change', toggleSpeedElFunc);
+
+let toggleMusicElFunc = () => {
   musicEnabled = toggleMusicEl.checked;
   if (!musicEnabled) {
     audio.pause();
   } else if (!inMenu && gameMode) {
     audio.play();
   }
-});
+}
+
+const toggleMusicEl = document.getElementById('toggleMusic');
+toggleMusicEl.addEventListener('change', toggleMusicElFunc);
 
 function draw() {
   // Toggle menu visibility
@@ -902,7 +908,8 @@ function performRestart() {
   autoSpeedEnabled = true;
   document.getElementById('toggleSpeed').checked = true;
 }
-document.addEventListener('keydown', event => {
+
+let keydownFunc = event => {
   if (event.key.toLowerCase() === 'p') {
     paused = !paused;
     if (!paused) lastTime = performance.now();
@@ -961,8 +968,9 @@ document.addEventListener('keydown', event => {
   } else if (event.key === 'Shift' || event.key.toLowerCase() === 'c') {
     playerHold();
   }
-});
-document.addEventListener('keyup', event => {
+}
+
+let keyupFunc = event => {
   if (event.key.toLowerCase() === 'r') {
     restartHoldActive = false;
     restartRemainingMs = 0;
@@ -970,7 +978,10 @@ document.addEventListener('keyup', event => {
   if (event.key === 'ArrowLeft') moveLeftHeld = false;
   if (event.key === 'ArrowRight') moveRightHeld = false;
   if (event.key === 'ArrowDown') softDropHeld = false;
-});
+}
+
+document.addEventListener('keydown', keydownFunc);
+document.addEventListener('keyup', keyupFunc);
 // --- START GAME ---
 // nextQueue = [];
 // holdPiece = null;
