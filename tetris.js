@@ -2,7 +2,7 @@
 const COLS = 10;
 const ROWS = 20;
 const BLOCK = 24;
-const COLORS = [
+let colors = [
   null,
   '#FF0D72', // T
   '#0DC2FF', // I
@@ -222,7 +222,7 @@ function drawMatrix(matrix, offset, colorIndex, ctx = context) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value) {
-        ctx.fillStyle = COLORS[colorIndex || value];
+        ctx.fillStyle = colors[colorIndex || value];
         ctx.fillRect((x + offset.x) * BLOCK, (y + offset.y) * BLOCK, BLOCK, BLOCK);
         ctx.strokeStyle = '#222';
         ctx.strokeRect((x + offset.x) * BLOCK, (y + offset.y) * BLOCK, BLOCK, BLOCK);
@@ -265,7 +265,7 @@ function drawPreview(ctx, matrix, colorIndex) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value) {
-        ctx.fillStyle = COLORS[colorIndex || value];
+        ctx.fillStyle = colors[colorIndex || value];
         ctx.fillRect((x + offset.x) * 24, (y + offset.y) * 24, 24, 24);
         ctx.strokeStyle = '#222';
         ctx.strokeRect((x + offset.x) * 24, (y + offset.y) * 24, 24, 24);
@@ -315,7 +315,7 @@ function drawNextPreviews() {
     m.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value) {
-          nextCtx.fillStyle = COLORS[idx];
+          nextCtx.fillStyle = colors[idx];
           nextCtx.fillRect((x + offset.x) * 24, (y + offset.y) * 24, 24, 24);
           nextCtx.strokeStyle = '#222';
           nextCtx.strokeRect((x + offset.x) * 24, (y + offset.y) * 24, 24, 24);
@@ -461,9 +461,8 @@ function handleWin() {
 // Hook up menu buttons after DOM is ready
 document.getElementById('btn40').addEventListener('click', () => startMode('40lines'));
 document.getElementById('btnBlitz').addEventListener('click', () => startMode('blitz'));
-const toggleSpeedEl = document.getElementById('toggleSpeed');
-toggleSpeedEl.checked = autoSpeedEnabled;
-toggleSpeedEl.addEventListener('change', () => {
+
+let toggleSpeedElFunc = () => {
   if (!toggleSpeedEl.checked) {
     const phrase = prompt('Type exactly: "I am a faggot" (case sensitive) to disable speed-up');
     if (phrase === 'I am a faggot') {
@@ -476,16 +475,23 @@ toggleSpeedEl.addEventListener('change', () => {
     autoSpeedEnabled = true;
   }
   updateHUDForMode();
-});
-const toggleMusicEl = document.getElementById('toggleMusic');
-toggleMusicEl.addEventListener('change', () => {
+}
+
+const toggleSpeedEl = document.getElementById('toggleSpeed');
+toggleSpeedEl.checked = autoSpeedEnabled;
+toggleSpeedEl.addEventListener('change', toggleSpeedElFunc);
+
+let toggleMusicElFunc = () => {
   musicEnabled = toggleMusicEl.checked;
   if (!musicEnabled) {
     audio.pause();
   } else if (!inMenu && gameMode) {
     audio.play();
   }
-});
+}
+
+const toggleMusicEl = document.getElementById('toggleMusic');
+toggleMusicEl.addEventListener('change', toggleMusicElFunc);
 
 function draw() {
   // Toggle menu visibility
@@ -496,7 +502,7 @@ function draw() {
   arena.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value) {
-        context.fillStyle = COLORS[value];
+        context.fillStyle = colors[value];
         context.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
         context.strokeStyle = '#222';
         context.strokeRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
@@ -715,7 +721,7 @@ function playerReset() {
   fillNextQueue();
   const tetrominoIndex = nextQueue.shift();
   player.matrix = SHAPES[tetrominoIndex].map(row => row.slice());
-  player.color = COLORS[tetrominoIndex];
+  player.color = colors[tetrominoIndex];
   player.tetrominoIndex = tetrominoIndex;
   player.pos.y = 0;
   player.pos.x = ((COLS / 2) | 0) - ((player.matrix[0].length / 2) | 0);
@@ -742,7 +748,7 @@ function playerHold() {
     // Swap
     let temp = player.tetrominoIndex;
     player.matrix = SHAPES[holdPiece].map(row => row.slice());
-    player.color = COLORS[holdPiece];
+    player.color = colors[holdPiece];
     player.tetrominoIndex = holdPiece;
     player.pos.y = 0;
     player.pos.x = ((COLS / 2) | 0) - ((player.matrix[0].length / 2) | 0);
@@ -902,7 +908,8 @@ function performRestart() {
   autoSpeedEnabled = true;
   document.getElementById('toggleSpeed').checked = true;
 }
-document.addEventListener('keydown', event => {
+
+let keydownFunc = event => {
   if (event.key.toLowerCase() === 'p') {
     paused = !paused;
     if (!paused) lastTime = performance.now();
@@ -961,8 +968,9 @@ document.addEventListener('keydown', event => {
   } else if (event.key === 'Shift' || event.key.toLowerCase() === 'c') {
     playerHold();
   }
-});
-document.addEventListener('keyup', event => {
+}
+
+let keyupFunc = event => {
   if (event.key.toLowerCase() === 'r') {
     restartHoldActive = false;
     restartRemainingMs = 0;
@@ -970,7 +978,10 @@ document.addEventListener('keyup', event => {
   if (event.key === 'ArrowLeft') moveLeftHeld = false;
   if (event.key === 'ArrowRight') moveRightHeld = false;
   if (event.key === 'ArrowDown') softDropHeld = false;
-});
+}
+
+document.addEventListener('keydown', keydownFunc);
+document.addEventListener('keyup', keyupFunc);
 // --- START GAME ---
 // nextQueue = [];
 // holdPiece = null;
