@@ -2,7 +2,7 @@
 const COLS = 10;
 const ROWS = 20;
 const BLOCK = 24;
-const COLORS = [
+let colors = [
   null,
   '#FF0D72', // T
   '#0DC2FF', // I
@@ -222,7 +222,7 @@ function drawMatrix(matrix, offset, colorIndex, ctx = context) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value) {
-        ctx.fillStyle = COLORS[colorIndex || value];
+        ctx.fillStyle = colors[colorIndex || value];
         ctx.fillRect((x + offset.x) * BLOCK, (y + offset.y) * BLOCK, BLOCK, BLOCK);
         ctx.strokeStyle = '#222';
         ctx.strokeRect((x + offset.x) * BLOCK, (y + offset.y) * BLOCK, BLOCK, BLOCK);
@@ -265,7 +265,7 @@ function drawPreview(ctx, matrix, colorIndex) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value) {
-        ctx.fillStyle = COLORS[colorIndex || value];
+        ctx.fillStyle = colors[colorIndex || value];
         ctx.fillRect((x + offset.x) * 24, (y + offset.y) * 24, 24, 24);
         ctx.strokeStyle = '#222';
         ctx.strokeRect((x + offset.x) * 24, (y + offset.y) * 24, 24, 24);
@@ -315,7 +315,7 @@ function drawNextPreviews() {
     m.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value) {
-          nextCtx.fillStyle = COLORS[idx];
+          nextCtx.fillStyle = colors[idx];
           nextCtx.fillRect((x + offset.x) * 24, (y + offset.y) * 24, 24, 24);
           nextCtx.strokeStyle = '#222';
           nextCtx.strokeRect((x + offset.x) * 24, (y + offset.y) * 24, 24, 24);
@@ -496,7 +496,7 @@ function draw() {
   arena.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value) {
-        context.fillStyle = COLORS[value];
+        context.fillStyle = colors[value];
         context.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
         context.strokeStyle = '#222';
         context.strokeRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
@@ -715,7 +715,7 @@ function playerReset() {
   fillNextQueue();
   const tetrominoIndex = nextQueue.shift();
   player.matrix = SHAPES[tetrominoIndex].map(row => row.slice());
-  player.color = COLORS[tetrominoIndex];
+  player.color = colors[tetrominoIndex];
   player.tetrominoIndex = tetrominoIndex;
   player.pos.y = 0;
   player.pos.x = ((COLS / 2) | 0) - ((player.matrix[0].length / 2) | 0);
@@ -742,7 +742,7 @@ function playerHold() {
     // Swap
     let temp = player.tetrominoIndex;
     player.matrix = SHAPES[holdPiece].map(row => row.slice());
-    player.color = COLORS[holdPiece];
+    player.color = colors[holdPiece];
     player.tetrominoIndex = holdPiece;
     player.pos.y = 0;
     player.pos.x = ((COLS / 2) | 0) - ((player.matrix[0].length / 2) | 0);
