@@ -75,9 +75,10 @@
                 <!-- Last.fm Status -->
                 <div class="lastfm-status">
                     <span class="music-icon">🎧</span>
-                    <span class="lastfm-prefix">What is/was that mf listenin to?</span>
-      <span id="lastfm-status">Loading your Last.fm status...</span>
-    </div>
+                    <span class="lastfm-prefix">What <span id="lastfm-tense">is/was</span> that mf listenin to?</span>
+                    <span id="lastfm-status">Loading your Last.fm status...</span>
+                    <a href="https://www.last.fm/user/lumenreturns" target="_blank" class="lastfm-profile-link">Profile</a>
+                </div>
             </div>
         </section>
 
@@ -372,10 +373,13 @@ function updateLastfmBanner() {
       const album = track.album['#text'] || '';
       const nowPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
       const url = track.url || null;
+      const tenseSpan = document.getElementById('lastfm-tense');
       let msg = '';
       if (nowPlaying) {
+        tenseSpan.textContent = 'is';
         msg = `<b><a href="${url}" target="_blank" style="color:var(--accent-secondary);text-decoration:underline;">${song}</a></b> by <b>${artist}</b>${album ? ` from <b>${album}</b>` : ''}`;
       } else {
+        tenseSpan.textContent = 'was';
         msg = `<b><a href="${url}" target="_blank" style="color:var(--accent-secondary);text-decoration:underline;">${song}</a></b> by <b>${artist}</b>${album ? ` from <b>${album}</b>` : ''}`;
       }
       statusSpan.innerHTML = msg;

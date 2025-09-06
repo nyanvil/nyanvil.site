@@ -270,6 +270,26 @@ body {
   font-weight: 400;
 }
 
+.lastfm-profile-link {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(0, 123, 255, 0.1);
+  border: 1px solid rgba(0, 123, 255, 0.2);
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.lastfm-profile-link:hover {
+  background: rgba(0, 123, 255, 0.2);
+  border-color: var(--accent-primary);
+  color: var(--accent-secondary);
+}
+
 /* Main content */
 .main {
   max-width: 1200px;
