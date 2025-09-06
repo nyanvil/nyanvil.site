@@ -23,6 +23,9 @@
         <div class="bg-circle"></div>
         <div class="bg-circle"></div>
         <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
     </div>
 
     <header class="header">
@@ -50,11 +53,11 @@
         <section class="hero">
             <div class="hero-content">
                 <h2 class="hero-title">
-                    <span class="greeting">Hey there!</span>
-                    <span class="system-name">I'm over here stroking my dih, I got lotion on my dih, right now I'm just stroking my shiii. I'm horny as fuck man, I'm a freak man like-</span>
+                    <span class="greeting">Hey there, I'm...</span>
+                    <span class="system-name">Anvil :3</span>
                 </h2>
                 <p class="hero-description">
-                    A system of 4 that loves to tinker with tech, music and travelling as well as learning foreign languages & culture
+                    A system of 4 that loves tinkering with tech, music as well as travelling, learning foreign languages & culture.
                 </p>
                 
                 <div class="hero-stats">
@@ -70,14 +73,23 @@
                         <span class="stat-number">24/7</span>
                         <span class="stat-label">Horny</span>
                     </div>
+                    <div class="stat">
+                      <span class="stat-number">29</span>
+                      <span class="stat-label">IQ</span>
+                  </div>
+                  <div class="stat">
+                    <span class="stat-number">808</span>
+                    <span class="stat-label">Ts</span>
+                </div>
                 </div>
                 
                 <!-- Last.fm Status -->
                 <div class="lastfm-status">
                     <span class="music-icon">🎧</span>
-                    <span class="lastfm-prefix">What <span id="lastfm-tense">is/was</span> that mf listenin to?</span>
+                    <a href="https://www.last.fm/user/lumenreturns" target="_blank" class="lastfm-prefix-link">
+                        <span class="lastfm-prefix">What <span id="lastfm-tense">is/was</span> that mf listenin to?</span>
+                    </a>
                     <span id="lastfm-status">Loading your Last.fm status...</span>
-                    <a href="https://www.last.fm/user/lumenreturns" target="_blank" class="lastfm-profile-link">Profile</a>
                 </div>
             </div>
         </section>
@@ -133,6 +145,7 @@
                     <div class="tech-items">
                         <div class="tech-item">
                             <span class="tech-name">Galaxy S9 @ iodéOS 4.25 / Android 13</span>
+                            <a href="https://www.gsmarena.com/samsung_galaxy_s9-8966.php" target="_blank" class="tech-link">GSMArena</a>
                         </div>
                         <div class="tech-item">
                             <span class="tech-name">Redmi Note 11 @ HyperOS 1.0 / Android 13</span>
@@ -320,8 +333,9 @@ document.querySelectorAll('.alter-card').forEach(card => {
     notification.textContent = messages[alter];
     notification.style.cssText = `
       position: fixed;
-      top: 20px;
-      right: 20px;
+      bottom: -100px;
+      left: 50%;
+      transform: translateX(-50%);
       background: var(--bg-card);
       color: var(--text-primary);
       padding: 1rem 1.5rem;
@@ -329,13 +343,20 @@ document.querySelectorAll('.alter-card').forEach(card => {
       border: 1px solid var(--border-color);
       box-shadow: var(--shadow-lg);
       z-index: 1000;
-      animation: slideInRight 0.3s ease-out;
+      transition: all 0.3s ease-out;
     `;
     
+    // Add to DOM first
     document.body.appendChild(notification);
     
+    // Force a reflow to ensure initial state is applied
+    notification.offsetHeight;
+    
+    // Trigger the slide-in animation
+    notification.style.bottom = '20px';
+    
     setTimeout(() => {
-      notification.style.animation = 'slideOutRight 0.3s ease-in';
+      notification.style.bottom = '-100px';
       setTimeout(() => notification.remove(), 300);
     }, 3000);
   });
@@ -344,13 +365,13 @@ document.querySelectorAll('.alter-card').forEach(card => {
 // Add CSS animations for notifications
 const style = document.createElement('style');
 style.textContent = `
-  @keyframes slideInRight {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+  @keyframes slideInBottom {
+    from { transform: translateX(-50%) translateY(100%); opacity: 0; }
+    to { transform: translateX(-50%) translateY(0); opacity: 1; }
   }
-  @keyframes slideOutRight {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(100%); opacity: 0; }
+  @keyframes slideOutBottom {
+    from { transform: translateX(-50%) translateY(0); opacity: 1; }
+    to { transform: translateX(-50%) translateY(100%); opacity: 0; }
   }
 `;
 document.head.appendChild(style);
