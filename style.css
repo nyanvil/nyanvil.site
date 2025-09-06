@@ -369,22 +369,25 @@ body {
 }
 
 .about-content {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 4rem;
-  align-items: start;
+  text-align: center;
 }
 
 .about-text {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1.8;
   color: var(--text-secondary);
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .alters-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .alter-card {
@@ -435,6 +438,93 @@ body {
 .alter-pronouns {
   color: var(--text-muted);
   font-size: 0.9rem;
+}
+
+/* Tech section */
+.tech-section {
+  margin-bottom: 6rem;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.tech-category {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  transition: var(--transition);
+}
+
+.tech-category:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.tech-category-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tech-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tech-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.tech-item:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-hover);
+}
+
+.tech-name {
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.tech-link {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(0, 123, 255, 0.1);
+  border: 1px solid rgba(0, 123, 255, 0.2);
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tech-link:hover {
+  background: rgba(0, 123, 255, 0.2);
+  border-color: var(--accent-primary);
+  color: var(--accent-secondary);
 }
 
 /* Games section */
@@ -860,12 +950,12 @@ body {
     gap: 2rem;
   }
   
-  .about-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+  .alters-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
   
-  .alters-grid {
+  .tech-grid {
     grid-template-columns: 1fr;
   }
   
@@ -904,6 +994,10 @@ body {
   .hero-stats {
     flex-direction: column;
     gap: 1.5rem;
+  }
+  
+  .alters-grid {
+    grid-template-columns: 1fr;
   }
   
   .alter-card,
