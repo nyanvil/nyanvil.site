@@ -5,34 +5,189 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nyanvil Blog</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* inter-latin-wght-normal */
+        @font-face {
+          font-family: 'Inter Variable';
+          font-style: normal;
+          font-display: swap;
+          font-weight: 100 900;
+          src: url(https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+          unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Nyanvil.site</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">About Me</a></li>
-                <li><a href="blog.html">Blog</a></li>
-            </ul>
-        </nav>
+    <!-- Animated background -->
+    <div class="bg-animation">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">
+                <span class="logo-text">Nyanvil</span>
+                <span class="logo-dot">.</span>
+                <span class="logo-text">site</span>
+            </h1>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">About</a></li>
+                    <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                    <li><a href="index.html#games" class="nav-link">Games</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
     </header>
 
-    <main>
-        <section id="blog-posts">
-            <h2>Latest Posts</h2>
-            <article class="blog-post">
-                <h3>Test Post</h3>
-                <p class="post-meta">Published on 23/08/25</p>
-                <p>This is the content of my very first blog post. I'm excited to share my thoughts and experiences here!</p>
-                <a href="post1.html">Read More</a>
-            </article>
-            </article>
+    <main class="main">
+        <section class="blog-hero">
+            <div class="blog-hero-content">
+                <h1 class="blog-title">Coming soon</h1>
+                <p class="blog-subtitle">We have no idea how to implement a blog here yet.</p>
+                <p class="blog-subtitle">Hell idek if i want to implement one in the first place anymore</p>
+            </div>
+        </section>
+        <!--
+        <section class="blog-posts-section">
+            <div class="section-header">
+                <h2 class="section-title">Latest Posts</h2>
+                <div class="section-line"></div>
+            </div>
+            
+            <div class="blog-posts-grid">
+                <article class="blog-post featured">
+                    <div class="post-header">
+                        <div class="post-category">General</div>
+                        <div class="post-date">23/08/25</div>
+                    </div>
+                    <h3 class="post-title">Test Post</h3>
+                    <p class="post-excerpt">This is the content of my very first blog post. I'm excited to share my thoughts and experiences here!</p>
+                    <div class="post-footer">
+                        <a href="post1.html" class="read-more-btn">
+                            Read More
+                            <span class="btn-arrow">→</span>
+                        </a>
+                        <div class="post-tags">
+                            <span class="tag">first-post</span>
+                            <span class="tag">welcome</span>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="blog-post coming-soon">
+                    <div class="post-header">
+                        <div class="post-category">Tech</div>
+                        <div class="post-date">Coming Soon</div>
+                    </div>
+                    <h3 class="post-title">Building This Website</h3>
+                    <p class="post-excerpt">A deep dive into the technologies and design decisions behind nyanvil.site</p>
+                    <div class="post-footer">
+                        <span class="read-more-btn disabled">
+                            Coming Soon
+                        </span>
+                        <div class="post-tags">
+                            <span class="tag">web-dev</span>
+                            <span class="tag">design</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="blog-post coming-soon">
+                    <div class="post-header">
+                        <div class="post-category">Music</div>
+                        <div class="post-date">Coming Soon</div>
+                    </div>
+                    <h3 class="post-title">Our Music Journey</h3>
+                    <p class="post-excerpt">Exploring different genres, discovering new artists, and sharing our musical adventures</p>
+                    <div class="post-footer">
+                        <span class="read-more-btn disabled">
+                            Coming Soon
+                        </span>
+                        <div class="post-tags">
+                            <span class="tag">music</span>
+                            <span class="tag">discovery</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="newsletter-section">
+            <div class="newsletter-content">
+                <h3 class="newsletter-title">Stay Updated</h3>
+                <p class="newsletter-description">Get notified when we publish new posts about our adventures in tech, music, and life.</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" class="newsletter-input" disabled>
+                    <button class="newsletter-btn" disabled>Subscribe</button>
+                </div>
+                <p class="newsletter-note">Newsletter coming soon! For now, just check back regularly.</p>
+            </div>
+        </section>
+        -->
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2025 no copyright do whatever the fuck u want.</p>
-        <p><a href="https://github.com/nyanvil/nyanvil.site" target="_blank">GitHub Repository</a></p>
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2025 no copyright do whatever the fuck u want.</p>
+            <a href="https://github.com/nyanvil/nyanvil.site" target="_blank" class="footer-link">
+                <span class="github-icon">📁</span>
+                GitHub Repository
+            </a>
+        </div>
     </footer>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+
+        // Check for saved theme preference or default to dark mode
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Add parallax effect to background circles
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const circles = document.querySelectorAll('.bg-circle');
+            
+            circles.forEach((circle, index) => {
+                const speed = 0.5 + (index * 0.1);
+                circle.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Add hover effects to blog posts
+        document.querySelectorAll('.blog-post').forEach(post => {
+            post.addEventListener('mouseenter', () => {
+                post.style.transform = 'translateY(-5px)';
+            });
+            
+            post.addEventListener('mouseleave', () => {
+                post.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
 </body>
 </html>

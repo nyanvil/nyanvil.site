@@ -5,52 +5,270 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nyanvil.site</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* inter-latin-wght-normal */
+        @font-face {
+          font-family: 'Inter Variable';
+          font-style: normal;
+          font-display: swap;
+          font-weight: 100 900;
+          src: url(https://cdn.jsdelivr.net/fontsource/fonts/inter:vf@latest/latin-wght-normal.woff2) format('woff2-variations');
+          unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+        }
+    </style>
 </head>
 <body>
-
-    <header>
-        <h1>Nyanvil.site</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">About Me</a></li>
-                <li><a href="blog.html">Blog</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Last.fm Now Playing Banner -->
-    <div id="lastfm-banner" style="width:100%;background:#181818;color:#fff;padding:10px 0;text-align:center;font-family:sans-serif;font-size:16px;letter-spacing:0.5px;">
-      <span id="lastfm-status">Loading your Last.fm status...</span>
+    <!-- Animated background -->
+    <div class="bg-animation">
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
+        <div class="bg-circle"></div>
     </div>
 
-    <main>
-        <section id="about">
-            <h2>About Me</h2>
-            <p>Hey cunts, We are the Anvil System. We have 3 alters.</p>
-            <p>More abt em later.</p>
-            <p>We're 19. Our main hobbies are tinkering with tech, all things music, travelling and learning languages.</p>
-            <p></p>
-            <h2>Alters</h2>
-            <p>Angela (Host) ~ She/they/it</p>
-            <p>Vera ~ She/her</p>
-            <p>Zom ~ Any pronouns</p>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">
+                <span class="logo-text">Nyanvil</span>
+                <span class="logo-dot">.</span>
+                <span class="logo-text">site</span>
+            </h1>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link active">About</a></li>
+                    <li><a href="blog.html" class="nav-link">Blog</a></li>
+                    <li><a href="#games" class="nav-link">Games</a></li>
+                </ul>
+            </nav>
+            <button class="theme-toggle" id="themeToggle">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2 class="hero-title">
+                    <span class="greeting">Hey there!</span>
+                    <span class="system-name">I'm over here stroking my dih, I got lotion on my dih, right now I'm just stroking my shiii. I'm horny as fuck man, I'm a freak man like-</span>
+                </h2>
+                <p class="hero-description">
+                    A system of 4 that loves to tinker with tech, music and travelling as well as learning foreign languages & culture
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">19</span>
+                        <span class="stat-label">years old</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">alters</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Horny</span>
+                    </div>
+                </div>
+                
+                <!-- Last.fm Status -->
+                <div class="lastfm-status">
+                    <span class="music-icon">🎧</span>
+                    <span class="lastfm-prefix">What is/was that mf listenin to?</span>
+                    <span id="lastfm-status">Loading your Last.fm status...</span>
+                </div>
+            </div>
         </section>
-        <section id="bullshit">
-            <h2>Bullshit</h2>
-            <p>heres our retarded gamings</p>
-            <a href="snake.html">SNAKE</a>
-            <p>//</p>
-            <a href="tetris.html">TETRIS</a>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="section-header">
+                <h2 class="section-title">About Us</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>It's us against the world mfer.</p>
+                </div>
+                <div class="alters-grid">
+                    <div class="alter-card" data-alter="angela">
+                        <div class="alter-avatar">A</div>
+                        <h3 class="alter-name">Angela</h3>
+                        <p class="alter-role">(Former) Host</p>
+                        <p class="alter-pronouns">She/they/it</p>
+                    </div>
+                    <div class="alter-card" data-alter="vera">
+                        <div class="alter-avatar">V</div>
+                        <h3 class="alter-name">Vera</h3>
+                        <p class="alter-role">Alter (maybe fictive fuck like i know)</p>
+                        <p class="alter-pronouns">She/her</p>
+                      </div>
+                      <div class="alter-card" data-alter="zom">
+                          <div class="alter-avatar">Z</div>
+                          <h3 class="alter-name">Zom</h3>
+                          <p class="alter-role">Current Host</p>
+                          <p class="alter-pronouns">They/It</p>
+                      </div>                    </div>
+                      <div class="alter-card" data-alter="julia">
+                          <div class="alter-avatar">J</div>
+                          <h3 class="alter-name">Julia</h3>
+                          <p class="alter-role">Alter (probably fictive)</p>
+                          <p class="alter-pronouns">She/her</p>
+                      </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section class="games-section" id="games">
+            <div class="section-header">
+                <h2 class="section-title">Our Games</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="games-grid">
+                <a href="snake.html" class="game-card">
+                    <div class="game-icon">🐍</div>
+                    <h3 class="game-title">Snake</h3>
+                    <p class="game-description">Best played on Opera GX.</p>
+                    <div class="game-features">
+                        <span class="feature-tag">Music</span>
+                        <span class="feature-tag">Special Modes</span>
+                    </div>
+                </a>
+                <a href="tetris.html" class="game-card">
+                    <div class="game-icon">🧩</div>
+                    <h3 class="game-title">Antris</h3>
+                    <p class="game-description">Lightweight vibecoded tetrio competitor :pray:</p>
+                    <div class="game-features">
+                        <span class="feature-tag">40 Lines</span>
+                        <span class="feature-tag">Blitz Mode</span>
+                    </div>
+                </a>
+            </div>
         </section>
     </main>
 
-
-    <footer>
-        <p>&copy; 2025 no copyright do whatever the fuck u want.</p>
-        <p><a href="https://github.com/nyanvil/nyanvil.site" target="_blank">GitHub Repository</a></p>
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">&copy; 2025 no copyright do whatever the fuck u want.</p>
+            <a href="https://github.com/nyanvil/nyanvil.site" target="_blank" class="footer-link">
+                <span class="github-icon">📁</span>
+                GitHub Repository
+            </a>
+        </div>
     </footer>
 </body>
 <script>
+// Theme toggle functionality
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = themeToggle.querySelector('.theme-icon');
+
+// Check for saved theme preference or default to dark mode
+const currentTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', currentTheme);
+updateThemeIcon(currentTheme);
+
+themeToggle.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  updateThemeIcon(newTheme);
+});
+
+function updateThemeIcon(theme) {
+  themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Add active class to navigation based on scroll position
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+    if (scrollY >= (sectionTop - 200)) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${current}`) {
+      link.classList.add('active');
+    }
+  });
+});
+
+// Alter card interactions
+document.querySelectorAll('.alter-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const alter = card.dataset.alter;
+    const messages = {
+      angela: "Hai",
+      vera: "Purrrr",
+      zom: "Meow!",
+      julia: "Mrrrp"
+    };
+    
+    // Create a temporary notification
+    const notification = document.createElement('div');
+    notification.textContent = messages[alter];
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      padding: 1rem 1.5rem;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+      z-index: 1000;
+      animation: slideInRight 0.3s ease-out;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.style.animation = 'slideOutRight 0.3s ease-in';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  });
+});
+
+// Add CSS animations for notifications
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes slideOutRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+  }
+`;
+document.head.appendChild(style);
+
 // Last.fm Now Playing Banner Script
 const lastfmUser = 'lumenreturns';
 const statusSpan = document.getElementById('lastfm-status');
@@ -71,9 +289,9 @@ function updateLastfmBanner() {
       const url = track.url || null;
       let msg = '';
       if (nowPlaying) {
-        msg = `🎧 Now listening to <b><a href="${url}" target="_blank" style="color:#7ddcff;text-decoration:underline;">${song}</a></b> by <b>${artist}</b>${album ? ` from <b>${album}</b>` : ''}`;
+        msg = `<b><a href="${url}" target="_blank" style="color:var(--accent-secondary);text-decoration:underline;">${song}</a></b> by <b>${artist}</b>${album ? ` from <b>${album}</b>` : ''}`;
       } else {
-        msg = `Last played: <b><a href="${url}" target="_blank" style="color:#7ddcff;text-decoration:underline;">${song}</a></b> by <b>${artist}</b>${album ? ` from <b>${album}</b>` : ''}`;
+        msg = `<b><a href="${url}" target="_blank" style="color:var(--accent-secondary);text-decoration:underline;">${song}</a></b> by <b>${artist}</b>${album ? ` from <b>${album}</b>` : ''}`;
       }
       statusSpan.innerHTML = msg;
     })
@@ -85,5 +303,35 @@ function updateLastfmBanner() {
 updateLastfmBanner();
 // Optionally refresh every 60 seconds
 setInterval(updateLastfmBanner, 60000);
+
+// Add some fun interactions
+document.addEventListener('DOMContentLoaded', () => {
+  // Add typing effect to hero title
+  const systemName = document.querySelector('.system-name');
+  const text = systemName.textContent;
+  systemName.textContent = '';
+  
+  let i = 0;
+  const typeWriter = () => {
+    if (i < text.length) {
+      systemName.textContent += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, 100);
+    }
+  };
+  
+  setTimeout(typeWriter, 1000);
+  
+  // Add parallax effect to background circles
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const circles = document.querySelectorAll('.bg-circle');
+    
+    circles.forEach((circle, index) => {
+      const speed = 0.5 + (index * 0.1);
+      circle.style.transform = `translateY(${scrolled * speed}px)`;
+    });
+  });
+});
 </script>
 </html>
